@@ -1,4 +1,23 @@
 <resources>
+
     <string name="app_name">HomeWork</string>
+
+    <string name="name">Name</string>
+
+    <string name="enter_name">Enter name…</string>
+
+    <string name="subject">Subject</string>
+
+    <string name="enter_subject">Enter subject…</string>
+
     <string name="action_settings">Settings</string>
+
+    <string name="date">Date</string>
+
+    <string name="enter_date">Enter date…</string>
+
+    <string name="finished">Finished?</string>
+
+    <string name="empty_list">There is no homework, add one by tapping the (+) button.</string>
+
 </resources>

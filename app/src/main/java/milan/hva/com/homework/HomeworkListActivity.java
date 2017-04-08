@@ -30,9 +30,6 @@ public class HomeworkListActivity extends AppCompatActivity {
         mListView = (ListView) findViewById(R.id.list_view);
         mItems = new ArrayList<>();
 
-        mItems.add("Bread");
-
-        mItems.add("Milk");
 
         updateUI();
 
