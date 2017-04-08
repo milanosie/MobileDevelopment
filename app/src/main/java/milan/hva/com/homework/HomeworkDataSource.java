@@ -52,8 +52,34 @@ public class HomeworkDataSource {
                 null, // having
                 null  // orderBy
         );
-
         return new HomeworkCursorWrapper(cursor);
-
     }
+
+    public Cursor getAllHomework() {
+        return queryHomework(null, null);
+    }
+
+    public Homework getHomeworkById(long id) {
+
+        HomeworkCursorWrapper cursor = queryHomework(HomeworkDbSchema.HomeworkTable.Cols.ID + " = ?",
+                new String[]{Long.toString(id)});
+        try {
+            if (cursor.getCount() == 0) {
+                return null;
+            }
+            cursor.moveToFirst();
+            return cursor.getHomework();
+        } finally {
+            cursor.close();
+        }
+    }
+
+    public void deleteHomework(long id) {
+        String idString = Long.toString(id);
+        mDatabase.delete(HomeworkDbSchema.HomeworkTable.NAME,
+                HomeworkDbSchema.HomeworkTable.Cols.ID + " = ?",
+                new String[]{idString});
+    }
+
+
 }
