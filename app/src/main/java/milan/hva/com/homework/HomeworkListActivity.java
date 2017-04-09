@@ -1,5 +1,8 @@
 package milan.hva.com.homework;
 
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -16,9 +19,11 @@ import java.util.List;
 
 public class HomeworkListActivity extends AppCompatActivity {
 
-    private ListView mListView;
-    private ArrayAdapter<String> mAdapter;
-    private List<String> mItems;
+
+    private Cursor mCursor;
+    private ListView mHomeworkListView;
+    private HomeworkAdapter mAdapter;
+    private HomeworkDataSource mDataSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,10 +32,7 @@ public class HomeworkListActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mListView = (ListView) findViewById(R.id.list_view);
-        mItems = new ArrayList<>();
-
-
+        mDataSource = new HomeworkDataSource(this);
         updateUI();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -39,7 +41,8 @@ public class HomeworkListActivity extends AppCompatActivity {
             @Override
 
             public void onClick(View view) {
-
+                Intent intent = new Intent(HomeworkListActivity.this, AddHomeworkActivity.class);
+                startActivity(intent);
             }
 
         });
@@ -53,11 +56,13 @@ public class HomeworkListActivity extends AppCompatActivity {
     }
 
     private void updateUI() {
+
+        mCursor = mDataSource.getAllHomework();
         if (mAdapter == null) {
-            mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, mItems);
-            mListView.setAdapter(mAdapter);
+            mAdapter = new HomeworkAdapter(this, mCursor);
+            mHomeworkListView.setAdapter(mAdapter);
         } else {
-            mAdapter.notifyDataSetChanged();
+            mAdapter.changeCursor(mCursor);
         }
 
     }
